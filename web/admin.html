@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+		<meta charset="UTF-8" http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>实唯物联</title>
+		
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<!--<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>-->
+		<script src="js-lib/jquery-2.1.1.min.js"></script>
+		<script src="my-js/admin/funs.js"></script>
+			
+		<script>
+			$( function() {
+				init();
+				$('#logout_a').click( function() { logout(); } );
+			} );	
+		</script>		
+		
+    </head>
+	
+	<body>
+		<div id='header'>
+			<a href="devs_list.html?t=a">首页</a>
+			<a>管理</a>
+			 <!--<a href="dev_control.html" >控制</a>-->
+			<a id='logout_a' style="position:absolute;right:20px">注销</a>
+		</div>
+		
+		<table id='admin_t1' class='three_t type1' cellspacing="0">
+			<tbody>
+				<tr class='user_admin_h' style="height:80px"><th class='name' style="font-size:19px"><a href="user_list.html" target="_blank" style="margin:0">用户管理</a></th><th class='value'></th><th class='time'></th></tr>
+				<tr class='user_admin'><th class='name'>用户名:</th><th class='value'><input id='user_name' type='text'/></th><th class='time'></th></tr>
+				<tr class='user_admin'><th class='name'>类型:</th><th class='value'>
+					<select id='user_type' style="font-size:17px;font-family:'Microsoft Yahei'">
+						<option value="admin">管理员</option>
+						<option value="normal" selected="selected">普通用户</option>
+					</select>
+				</th><th class='time'></th></tr>
+				<tr class='user_admin'><th class='name'>密码:</th><th class='value'><input id='user_key' type='text'/><input id='user_valid' type='checkbox' checked/>启用</th><th id='user_res' class='time'></th></tr>
+				<tr class='user_admin'><th class='name'></th><th class='value' style="padding-left:50px;text-align:left"><a class='b' id='user_add'>添加</a><a id='user_search' class='b'>查找</a><a id='user_update' class='b'>修改</a><a href='users_list.html' target='_blank' style="margin-left:40px">用户列表</a></th><th class='time'></th></tr>
+			</tbody>
+		</table>
+		
+		<table id='admin_t2' class='three_t type2' cellspacing="0">
+			<tbody>
+				<tr class='user_admin_h' style="height:80px"><th class='name' style="font-size:19px">设备管理</th><th class='value'></th><th class='time'></th></tr>
+				<tr class='user_admin'><th class='name'>GUID:</th><th class='value'><input id='dev_guid' type='text'/></th><th class='time'></th></tr>
+				<tr class='user_admin'><th class='name'>名称:</th><th class='value'><input id='dev_name' type='text'/><input id='dev_valid' type='checkbox' checked/>启用</th><th class='time'></th></tr>
+				<tr class='user_admin'><th class='name'></th><th class='value' style="padding-left:50px;text-align:left"><a id='dev_add' class='b'>添加</a><a id='dev_search' class='b'>查找</a><a id='dev_update' class='b'>修改</a></th><th id='dev_res' class='time'></th></tr>
+			</tbody>
+		</table>
+	</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+		<meta charset="UTF-8" http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>实唯物联</title>
+		
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<!--<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>-->
+		<script src="js-lib/jquery-2.1.1.min.js"></script>
+			
+		<script>
+			var login = 0;
+			
+			$( function() {
+			
+				$('#login_b').click( function(){
+					var now = new Date().getTime();
+					if( (now-login)>5000 ) {
+						var user = $('#user').val();
+						var password = $('#password').val();
+						if( user=='' || password=='' )
+							return;
+							
+						login = new Date().getTime();
+						
+						$.post( 'my-php/login/login.php', {'n':user,'p':password}, function( data ) {
+							if( data.length==0 )
+								return;
+							location.href = data;
+						} );	
+					}
+				} );
+				
+				$('body').keydown( function(e) {
+					if(e.keyCode==13)
+						$('#login_b').click();
+				} );
+				
+			} );
+		</script>
+		
+    </head>
+	
+	<body style="min-width:600px">
+		<div id='header'></div>
+		<table id='login'>
+			<tbody>
+				<tr>
+					<th class='label'>用户名:</th>
+					<th><input id='user' type="text" /></th>
+				</tr>
+				<tr>
+					<th class='label'>密码:</th>
+					<th><input id='password' type="password" /></th>
+				</tr>
+				<tr>
+					<th class='label'></th>
+					<th class='button'>
+						<a id='login_b' class='b'>登 陆</a>
+					</th>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>

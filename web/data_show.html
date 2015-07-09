@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+		<meta charset="UTF-8" http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>实唯物联</title>
+		
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<!--<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>-->
+		<script src="js-lib/jquery-2.1.1.min.js"></script>
+		<script src="js-lib/jquery.flot.js"></script>
+		<script src="js-lib/jquery.flot.time.js"></script>
+		<script src="my-js/data_show/funs.js"></script>
+		<script src="my-js/get_user.js"></script>
+				
+		<script>
+			var user = new Object();
+			
+			var dev = new Object();
+			dev.t = new Array();
+			dev.t[0] = 0;
+			
+			dev.p = new Array();
+			dev.temp = new Array();
+			dev.r = new Array();
+			dev.tz = 8;
+			
+			get_user();
+			
+			$( function() {
+				var mid_s1 = (location.href).split("?");
+				if( mid_s1.length>1 ) {
+					var mid_s2 = mid_s1[1].split("=");
+					if( mid_s2.length>2 ) {
+						dev.gid = mid_s2[1].split("&")[0];
+						dev.name = decodeURI( mid_s2[2] );
+						
+						$('#dev_info').html('设备名称:&nbsp;'+dev.name+"&nbsp;&nbsp;ID:&nbsp;"+dev.gid);
+											
+						var mid_str = $('#dev_control').attr('href');
+						$('#dev_control').attr( 'href', mid_str+"?gid="+dev.gid+"&n="+dev.name );
+					}
+					init();		
+					$('#logout_a').click( function() { logout(); } );					
+				}
+			} );
+			
+		</script>
+		
+		<script>
+			
+		</script>
+		
+    </head>
+	
+	<body style="overflow-x:hidden">
+		<div id='header'>
+			<a href='devs_list.html'>首页</a>
+			<a id='admin_a' href='admin.html' target='_blank'>管理</a>
+			<a id='dev_control' href="dev_control.html" target='_blank'>控制</a>
+			<a id='dev_info' style="font-weight:normal;margin-left:20%"></a>
+			<a id='logout_a' style="position:absolute;right:20px">注销</a>
+		</div>
+		
+		<table id='data_list' class='three_t' cellspacing="0">
+			<tbody>
+				<tr><th class='name'>参数名称</th><th class='value'>数值</th><th class='time'>采集时间</th></tr>
+				<tr><th class='name'>压力</th><th class='value' id='pv'></th><th id='pvt' class='time'></th></tr>
+				<tr><th class='name'>温度</th><th class='value' id='tv'></th><th id='tvt' class='time'></th></tr>
+				<tr><th class='name'>流量</th><th class='value' id='fv'></th><th id='fvt' class='time'></th></tr>
+				<tr><th class='name'>阻力</th><th class='value' id='rv'></th><th id='rvt' class='time'></th></tr>
+			</tbody>
+		</table>
+		<div style="width:98%;height:0;margin:0 0.7%;border:1px solid rgb(98,157,213)"></div>
+		<div class='flot_div' id='f_div'>
+			<div class='fdiv' id='p_flot'></div>
+			<div class='fdiv' id='temp_flot'></div>
+			<div class='fdiv' id='f_flot'></div>
+			<div class='fdiv' id='r_flot'></div>
+		</div>
+		
+		<div id='alarm_div' style='width:300px;height:160px;position:fixed;top:45%;left:45%;background:rgba(250,98,98,0.7);'>
+			<div id='alarm_close' style='width:20px;height:20px;float:right;font-weight:bold;color:#FFF'>&nbsp;X</div>
+			<p id='p_alarm_show' style='margin-top:20px;line-height:40px;text-align:center;width:100%;height:40px;font-size:17px;color:#FFF;'>压力异常</p>
+			<p id='t_alarm_show' style='line-height:40px;text-align:center;width:100%;height:40px;font-size:17px;color:#FFF;'>温度异常</p>
+			<p id='f_alarm_show' style='line-height:40px;text-align:center;width:100%;height:40px;font-size:17px;color:#FFF;'>流量异常</p>
+		</div>
+	</body>
+</html>
