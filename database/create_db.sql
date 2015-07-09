@@ -1,7 +1,7 @@
 
-CREATE DATABASE IF NOT EXISTS `hx_k_db` DEFAULT CHARACTER SET `utf8`;
+CREATE DATABASE IF NOT EXISTS `sp20150709_db` DEFAULT CHARACTER SET `utf8`;
 
-CREATE TABLE IF NOT EXISTS hx_k_db.user_t (
+CREATE TABLE IF NOT EXISTS sp20150709_db.user_t (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(60) DEFAULT 'Anonymous' UNIQUE,
 	`passwd` VARCHAR(32) NOT NULL DEFAULT 'NULL',
@@ -10,9 +10,9 @@ CREATE TABLE IF NOT EXISTS hx_k_db.user_t (
 	PRIMARY KEY ( `id` )
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS hx_k_db.dev_t (
+CREATE TABLE IF NOT EXISTS sp20150709_db.dev_t (
 	`gid` CHAR(32) UNIQUE DEFAULT '',
-	`name` VARCHAR(32) DEFAULT '肾移植箱',
+	`name` VARCHAR(32) DEFAULT '我的鱼缸',
 	`intv` INT DEFAULT 60,	
 	`d_ip` VARCHAR(65) DEFAULT '',
 	`d_port` INT DEFAULT -1,
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS hx_k_db.dev_t (
 	PRIMARY KEY ( `gid` )
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS hx_k_db.data_t (
+CREATE TABLE IF NOT EXISTS sp20150709_db.data_t (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
 	`dev_id` CHAR(32) NOT NULL,
 	`value` DOUBLE DEFAULT 0,
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS hx_k_db.data_t (
 	PRIMARY KEY ( `id` )
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS hx_k_db.normal_t (
+CREATE TABLE IF NOT EXISTS sp20150709_db.normal_t (
 	`gid` CHAR(32) DEFAULT '',
 	`v_name` VARCHAR(32) DEFAULT '',	
 	`valid` BOOLEAN DEFAULT 1,
@@ -41,13 +41,13 @@ CREATE TABLE IF NOT EXISTS hx_k_db.normal_t (
 	PRIMARY KEY ( `gid`, `v_name` )
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO hx_k_db.user_t ( id, name, passwd, type ) VALUES ( 1, 'admin', MD5('adminadmin'), 'admin' );
+INSERT INTO sp20150709_db.user_t ( id, name, passwd, type ) VALUES ( 1, 'admin', MD5('adminadmin'), 'admin' );
 
 /*-------------------------------------------------------------------------------------------------------------------
 		定义存储过程
 ---------------------------------------------------------------------------------------------------------------------*/
 
-USE hx_k_db;
+USE sp20150709_db;
 DROP PROCEDURE IF EXISTS add_data;
 
 /*
@@ -61,7 +61,7 @@ CREATE PROCEDURE add_data( IN in_gid VARCHAR(8), IN d DOUBLE, IN n CHAR(1), IN u
 LOOP1:BEGIN
 
 	SET @v = 0;
-	SELECT valid INTO @v FROM hx_k_db.dev_t WHERE gid=in_gid;
+	SELECT valid INTO @v FROM sp20150709_db.dev_t WHERE gid=in_gid;
 	IF FOUND_ROWS()<=0 THEN
 		LEAVE LOOP1;
 	END IF;
@@ -69,21 +69,9 @@ LOOP1:BEGIN
 	IF @v=0 THEN
 		LEAVE LOOP1;
 	END IF;
-	
-	IF n='p' THEN
-		INSERT INTO hx_k_db.data_t ( dev_id, v_name, value, time, batch ) VALUES ( in_gid, n, d, utc, batch );
-	END IF;
-	
+		
 	IF n='t' THEN
-		INSERT INTO hx_k_db.data_t ( dev_id, v_name, value, time, batch ) VALUES ( in_gid, n, d, utc, batch );
-	END IF;
-	
-	IF n='f' THEN
-		INSERT INTO hx_k_db.data_t ( dev_id, v_name, value, time, batch ) VALUES ( in_gid, n, d, utc, batch );
-	END IF;
-	
-	IF n='r' THEN
-		INSERT INTO hx_k_db.data_t ( dev_id, v_name, value, time, batch ) VALUES ( in_gid, n, d, utc, batch );
+		INSERT INTO sp20150709_db.data_t ( dev_id, v_name, value, time, batch ) VALUES ( in_gid, n, d, utc, batch );
 	END IF;
 	
 END LOOP1
