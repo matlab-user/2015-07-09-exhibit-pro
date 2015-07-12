@@ -5,19 +5,19 @@
     <head>
 		<meta charset="UTF-8" http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>实唯物联</title>
-		
+
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<!--<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>-->
 		<script src="js-lib/jquery-2.1.1.min.js"></script>
 		<script src="my-js/get_user.js"></script>
 		<script src="my-js/dev_control/funs.js"></script>
-	
+
 		<script>
 			var user = new Object();
 			var dev = new Object();
-						
+
 			get_user();
-					
+
 			$( function() {
 				var mid_s1 = (location.href).split("?");
 				if( mid_s1.length>1 ) {
@@ -25,25 +25,25 @@
 					if( mid_s2.length>2 ) {
 						dev.gid = mid_s2[1].split("&")[0];
 						dev.name = decodeURI( mid_s2[2] );
-						
-						$('#dev_info').html('设备名称:&nbsp;'+dev.name+"&nbsp;&nbsp;ID:&nbsp;"+dev.gid);	
-					}	
-					$('#logout_a').click( function() { logout(); } );					
+
+						$('#dev_info').html('设备名称:&nbsp;'+dev.name+"&nbsp;&nbsp;ID:&nbsp;"+dev.gid);
+					}
+					$('#logout_a').click( function() { logout(); } );
 				}
-				
+
 				init();
 				$('#logout_a').click( function() { logout(); } );
 
 			} );
-			
+
 		</script>
-		
+
 		<script>
-			
+
 		</script>
-		
+
     </head>
-	
+
 	<body style="overflow-x:hidden">
 		<div id='header'>
 			<a href='devs_list.html'>首页</a>
@@ -52,18 +52,15 @@
 			<a id='dev_info' style="font-weight:normal;margin-left:20%"></a>
 			<a id='logout_a' style="position:absolute;right:20px">注销</a>
 		</div>
-		
+
 		<table id='control_t' class='three_t' cellspacing="0">
 			<tbody>
 				<tr><th class='name'>操作名称</th><th class='value'>输入参数</th><th class='time'>结果反馈</th></tr>
-				<tr><th class='name'>开机</th><th class='value'><a id='open_a' class='b'>开机</a></th><th class='time' id='open_res'></th></tr>
-				<tr><th class='name'>关机</th><th class='value'><a id='close_a' class='b'>关机</a></th><th class='time' id='close_res'></th></tr>
-				<tr><th class='name'>压力设定</th><th class='value'><input id='p_val' type='number'/><a id='p_set_a' class='b'>设置</a></th><th id='p_res' class='time'></th></tr>
-				<tr><th class='name'>温度设定</th><th class='value'><input id='t_val' type='number'/><a id='t_set_a' class='b'>设置</a></th><th id='t_res' class='time'></th></tr>
-				<tr><th class='name'>流量设定</th><th class='value'><input id='f_val' type='number'/><a id='f_set_a' class='b'>设置</a></th><th id='f_res' class='time'></th></tr>
-				<tr><th class='name'>压力正常范围设定</th><th class='value'><input id='p_th1' type='number'/><input id='p_th2' type='number'/><a id='p_normal_set_a' class='b'>设置</a><th class='time'></th></tr>
+				<tr><th class='name'>灯光开关</th><th class='value'><a id='open_l' class='b'>开</a>&nbsp;&nbsp;&nbsp;&nbsp;<a id='close_l' class='b'>关</a></th><th class='time' id='light'></th></tr>
+				<tr><th class='name'>循环开关</th><th class='value'><a id='open_w' class='b'>开</a>&nbsp;&nbsp;&nbsp;&nbsp;<a id='close_w' class='b'>关</a></th><th class='time' id='water'></th></tr>
+				<tr><th class='name'>通气开关</th><th class='value'><a id='open_g' class='b'>开</a>&nbsp;&nbsp;&nbsp;&nbsp;<a id='close_g' class='b'>关</a></th><th class='time' id='gas'></th></tr>
 				<tr><th class='name'>温度正常范围设定</th><th class='value'><input id='t_th1' type='number'/><input id='t_th2' type='number'/><a id='t_normal_set_a' class='b'>设置</a><th class='time'></th></tr>
-				<tr><th class='name'>流量正常范围设定</th><th class='value'><input id='f_th1' type='number'/><input id='f_th2' type='number'/><a id='f_normal_set_a' class='b'>设置</a><th class='time'></th></tr>
+				<tr><th class='name'>短信发送</th><th class='value'><input id='msg' type='text'/><a id='msg_send' class='b'>发送</a></th><th id='msg_res' class='time'></th></tr>
 			</tbody>
 		</table>
 	</body>

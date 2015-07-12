@@ -3,7 +3,7 @@
 	set_time_limit( 0 );
 	ob_implicit_flush();
 	
-	$port = 1024;
+	$port = 1982;
 	
 	$socket = socket_create( AF_INET, SOCK_DGRAM, SOL_UDP );
 	if( $socket===false ) {
@@ -24,7 +24,8 @@
 		exit;
 	}
 
-	$cmd = 'S[s001,open]';
+	//$cmd = 'S[s001,open]';
+	$cmd = 'D[s001,123.5]';
 	socket_sendto( $socket, $cmd, strlen($cmd), 0, '127.0.0.1', $port ); 
 	
 	socket_close( $socket );

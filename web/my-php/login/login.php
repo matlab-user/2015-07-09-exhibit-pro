@@ -14,7 +14,7 @@
 
 	mysql_query("SET NAMES 'utf8'", $con);
 	
-	$res = mysql_query( "SELECT passwd, type, valid FROM hx_k_db.user_t WHERE name='".$_POST['n']."'", $con );
+	$res = mysql_query( "SELECT passwd, type, valid FROM sp20150709_db.user_t WHERE name='".$_POST['n']."'", $con );
 	$row = mysql_fetch_array( $res );
 	mysql_free_result ( $res );
 	mysql_close( $con );

@@ -16,7 +16,7 @@
 	else
 		$valid = 0;
 	
-	$sql_str = "INSERT INTO hx_k_db.user_t (name,passwd,type,valid) VALUES ('".$_POST['name']."', MD5('".$_POST['name'].$_POST['key']."'), '".$_POST['type']."',".$valid." )";
+	$sql_str = "INSERT INTO sp20150709_db.user_t (name,passwd,type,valid) VALUES ('".$_POST['name']."', MD5('".$_POST['name'].$_POST['key']."'), '".$_POST['type']."',".$valid." )";
 	$res = mysql_query( $sql_str, $con );
 	mysql_free_result ( $res );
 		

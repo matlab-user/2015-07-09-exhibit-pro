@@ -16,7 +16,7 @@
 	else
 		$valid = 0;
 	
-	$sql_str = "INSERT INTO hx_k_db.dev_t (name,gid,valid) VALUES ('".$_POST['name']."','".$_POST['guid']."',".$valid." )";
+	$sql_str = "INSERT INTO sp20150709_db.dev_t (name,gid,valid) VALUES ('".$_POST['name']."','".$_POST['guid']."',".$valid." )";
 	$res = mysql_query( $sql_str, $con );
 	mysql_free_result ( $res );
 		

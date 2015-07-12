@@ -1,18 +1,18 @@
 <?php
 
 	session_start();
-	
+
 	set_time_limit( 6 );
 	ob_implicit_flush();
-	
+
 //	$_POST['dev'] = 's001';
 //	$_POST['order'] = 'wangdehui';
-	
+
 	if( !isset($_POST['dev']) || !isset($_POST['order']) )
 		exit;
-	
-	$port = 1024;
-	
+
+	$port = 1982;
+
 	$socket = socket_create( AF_INET, SOCK_DGRAM, SOL_UDP );
 	if( $socket===false ) {
 		echo "socket_create() failed:reason:" . socket_strerror( socket_last_error() ) . "\n";
@@ -34,8 +34,8 @@
 	}
 
 	$cmd = $_POST['order'];
-	socket_sendto( $socket, $cmd, strlen($cmd), 0, '127.0.0.1', $port ); 
-	
+	socket_sendto( $socket, $cmd, strlen($cmd), 0, '127.0.0.1', $port );
+
 	$rev_num = socket_recvfrom( $socket, $buf, 20, 0, $lip='127.0.0.1', $port );
 	$msg = 'FAIL';
 	if( $rev_num==True ) {
@@ -43,6 +43,6 @@
 			$msg = 'OK';
 	}
 	socket_close( $socket );
-	
+
 	echo $msg;
 ?>

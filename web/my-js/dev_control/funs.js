@@ -1,36 +1,26 @@
-function init() {	
-	$('#open_a').click( function() { open(); } );
-	$('#close_a').click( function() { close(); } );
-	$('#p_set_a').click( function() { p_set(); } );
-	$('#t_set_a').click( function() { t_set(); } );
-	$('#f_set_a').click( function() { f_set(); } );
+function init() {
+	$('#open_l').click( function() { open('l'); } );
+	$('#open_w').click( function() { open('w'); } );
+	$('#open_g').click( function() { open('g'); } );
 
-	$('#p_normal_set_a').click( function() { p_normal_set(); } );
-	$('#f_normal_set_a').click( function() { f_normal_set(); } );
+	$('#close_l').click( function() { close('l'); } );
+	$('#close_w').click( function() { close('w'); } );
+	$('#close_g').click( function() { close('g'); } );
+
 	$('#t_normal_set_a').click( function() { t_normal_set(); } );
+
+	$('#msg_send').click( function() { msg_send(); } );
 
 	// 获取设备正常范围值
 	update_ths();
-	
+
 }
 
 function update_ths() {
-	
+
 	$.post( 'my-php/dev_control/get_normal.php',{'gid':dev.gid},function(data) {
 		var ths = JSON.parse( data );
-		if( ths.pth1!==undefined ) {
-			if( dev.p_normal_th1!=ths.pth1 ) {
-				dev.p_normal_th1 = ths.pth1;
-				$('#p_th1').val( ths.pth1);
-			}
-		}
-		if( ths.pth2!==undefined ) {
-			if( dev.p_normal_th2!=ths.pth2 ) { 
-				dev.p_normal_th2 = ths.pth2;
-				$('#p_th2').val( ths.pth2);
-			}
-		}
-		
+
 		if( ths.tth1!==undefined ) {
 			if( dev.t_normal_th1!=ths.tth1 ) {
 				dev.t_normal_th1 = ths.tth1;
@@ -43,97 +33,78 @@ function update_ths() {
 				$('#t_th2').val( ths.tth2);
 			}
 		}
-		
-		if( ths.fth1!==undefined ) {
-			if( dev.f_normal_th1!=ths.fth1 ) {
-				dev.f_normal_th1 = ths.fth1;
-				$('#f_th1').val( ths.fth1);
-			}
-		}
-		if( ths.fth2!==undefined ) {
-			if( dev.f_normal_th2!=ths.fth2 ) {
-				dev.f_normal_th2 = ths.fth2;
-				$('#f_th2').val( ths.fth2);
-			}
-		}
-	
+
 	} );
-	
+
 	setTimeout( 'update_ths()', 6000 );
 }
 
-function open() {
-	send_order( 'open', '' );	
-}
+function open( para ) {
+	var s = '';
+	switch (para) {
+		case 'l':
+			s = 'ol';
+			break;
 
-function close() {
-	send_order( 'close', '' );
-}
+		case 'w':
+			s = 'ow';
+			break;
 
-function p_set() {
-	var val = $('#p_val').val();
-	if( val.length>0 ) {
-		send_order( 'p_set', val );
-	}	
-}
+		case 'g':
+			s = 'og';
+			break;
 
-function t_set() {
-	var val = $('#t_val').val();
-	if( val.length>0 ) {
-		send_order( 't_set', val );
+		default:
+			return;
 	}
+	send_order( s, '' );
 }
 
-function f_set() {
-	var val = $('#f_val').val();
-	if( val.length>0 ) {
-		send_order( 'f_set', val );
+function close( para ) {
+
+	var s = '';
+	switch (para) {
+		case 'l':
+			s = 'cl';
+			break;
+
+		case 'w':
+			s = 'cw';
+			break;
+
+		case 'g':
+			s = 'cg';
+			break;
+
+		default:
+			return;
 	}
-}
 
-function p_normal_set() {
-	var val1 = $('#p_th1').val();
-	var val2 = $('#p_th2').val();
-	
-	if( val1.length<=0 )
-		val1 = 0;
-	if( val2.length<=0 )
-		val2 = 0;
-	
-	dev.p_normal_th1 = val1;
-	dev.p_normal_th2 = val2;
-	
-	$.post( 'my-php/dev_control/set_normal.php',{'gid':dev.gid,'v_name':'p','th1':val1,'th2':val2} );
+	send_order( s, '' );
 }
 
 function t_normal_set() {
 	var val1 = $('#t_th1').val();
 	var val2 = $('#t_th2').val();
-	
+
 	if( val1.length<=0 )
 		val1 = 0;
 	if( val2.length<=0 )
 		val2 = 0;
-	
+
 	dev.t_normal_th1 = val1;
 	dev.t_normal_th2 = val2;
-	
+
 	$.post( 'my-php/dev_control/set_normal.php',{'gid':dev.gid,'v_name':'t','th1':val1,'th2':val2} );
 }
 
-function f_normal_set() {
-	var val1 = $('#f_th1').val();
-	var val2 = $('#f_th2').val();
-	
-	if( val1.length<=0 )
-		val1 = 0;
-	if( val2.length<=0 )
-		val2 = 0;
-	
-	dev.f_normal_th1 = val1;
-	dev.f_normal_th2 = val2;
-	
-	$.post( 'my-php/dev_control/set_normal.php',{'gid':dev.gid,'v_name':'f','th1':val1,'th2':val2} );	
+function msg_send() {
+	var val = $('#msg').val();
+
+	if( val.length<=0 )
+		return;
+
+	send_order( 'msg_send', val );
 }
 
 /*
@@ -141,38 +112,40 @@ function f_normal_set() {
 	最终指令为：S[guid,order,para]
 */
 function send_order( order, para ) {
-	
+
 	var num_args = arguments.length;
 	var d = new Date();
 
 	//var order_str = 'S['+dev.gid+','+Math.round(d.getTime()/1000)+',';
 	var order_str = 'S['+dev.gid+',';
 	var res_h;
-	
+
 	switch( order ) {
-		case 'open':
-			order_str = order_str + 'open]';
-			res_h = $('#open_res');
-			break;	
-		case 'close':
-			order_str = order_str + 'close]';
-			res_h = $('#close_res');
-			break;	
-		case 'p_set':
-			order_str += 'set p ' + arguments[1]+']';
-			res_h = $('#p_res');
+		case 'ol':
+		case 'cl':
+			order_str = order_str + order + ']';
+			res_h = $('#light');
 			break;
-		case 't_set':
-			order_str += 'set t ' + arguments[1]+']';
-			res_h = $('#t_res');
-			break;	
-		case 'f_set':
-			order_str += 'set f ' + arguments[1]+']';
-			res_h = $('#f_res');
+
+		case 'ow':
+		case 'cw':
+			order_str = order_str + order + ']';
+			res_h = $('#water');
+			break;
+
+		case 'og':
+		case 'cg':
+			order_str = order_str + order + ']';
+			res_h = $('#gas');
+			break;
+
+		case 'msg_send':
+			order_str += 'set m ' + arguments[1]+']';
+			res_h = $('#msg_res');
 			break;
 	}
-	
-	$.post( 'my-php/dev_control/send_order.php',{'dev':dev.gid,'order':order_str},function(data) {
+
+	$.post( 'my-php/dev_control/send_order.php', {'dev':dev.gid,'order':order_str}, function(data) {
 		switch( data ) {
 			case'OK':
 				res_h.text('成功');
@@ -188,4 +161,3 @@ function send_order( order, para ) {
 			res_h.delay(3000).fadeIn(function(){$(this).text('');});
 		});
 }
-

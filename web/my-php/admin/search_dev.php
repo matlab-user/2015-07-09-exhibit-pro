@@ -15,7 +15,7 @@
 	mysql_query("SET NAMES 'utf8'", $con);
 	
 	$res = "{";
-	$sql_str = "SELECT name,valid FROM hx_k_db.dev_t WHERE gid='".$_POST['guid']."'";
+	$sql_str = "SELECT name,valid FROM sp20150709_db.dev_t WHERE gid='".$_POST['guid']."'";
 	$r = mysql_query( $sql_str, $con );
 	if( $r ) {
 		$row = mysql_fetch_array( $r );

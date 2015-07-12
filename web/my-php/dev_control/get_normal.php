@@ -12,7 +12,7 @@
 
 	mysql_query("SET NAMES 'utf8'", $con);
 	
-	$sql_str = "SELECT v_name, th1, th2 FROM hx_k_db.normal_t WHERE gid='".$_POST['gid']."'";
+	$sql_str = "SELECT v_name, th1, th2 FROM sp20150709_db.normal_t WHERE gid='".$_POST['gid']."'";
 	$res = mysql_query( $sql_str, $con );
 	if( empty($res) )
 		return $res_str;

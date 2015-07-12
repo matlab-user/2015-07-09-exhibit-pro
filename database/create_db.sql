@@ -1,4 +1,3 @@
-
 CREATE DATABASE IF NOT EXISTS `sp20150709_db` DEFAULT CHARACTER SET `utf8`;
 
 CREATE TABLE IF NOT EXISTS sp20150709_db.user_t (
@@ -56,6 +55,7 @@ DROP PROCEDURE IF EXISTS add_data;
 	f - 流量
 	r - 阻力
 */
+
 DELIMITER |
 CREATE PROCEDURE add_data( IN in_gid VARCHAR(8), IN d DOUBLE, IN n CHAR(1), IN utc BIGINT, IN batch BIGINT )
 LOOP1:BEGIN
@@ -69,7 +69,7 @@ LOOP1:BEGIN
 	IF @v=0 THEN
 		LEAVE LOOP1;
 	END IF;
-		
+	
 	IF n='t' THEN
 		INSERT INTO sp20150709_db.data_t ( dev_id, v_name, value, time, batch ) VALUES ( in_gid, n, d, utc, batch );
 	END IF;

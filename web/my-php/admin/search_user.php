@@ -15,7 +15,7 @@
 	mysql_query("SET NAMES 'utf8'", $con);
 	
 	$res = "{";
-	$sql_str = "SELECT type,valid FROM hx_k_db.user_t WHERE name='".$_POST['name']."'";
+	$sql_str = "SELECT type,valid FROM sp20150709_db.user_t WHERE name='".$_POST['name']."'";
 	$r = mysql_query( $sql_str, $con );
 	if( $r ) {
 		$row = mysql_fetch_array( $r );

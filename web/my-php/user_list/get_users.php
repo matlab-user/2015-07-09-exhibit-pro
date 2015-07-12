@@ -25,7 +25,7 @@
 
 	mysql_query("SET NAMES 'utf8'", $con);
 	
-	$res = mysql_query( "SELECT id, name, valid, type FROM hx_k_db.user_t LIMIT 100", $con );
+	$res = mysql_query( "SELECT id, name, valid, type FROM sp20150709_db.user_t LIMIT 100", $con );
 	while( $row = mysql_fetch_array( $res ) ) {
 		$xml .= '<d id='.$row[0].'>';
 		$xml .= '<name>'.$row[1].'</name>';

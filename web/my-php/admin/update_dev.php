@@ -16,7 +16,7 @@
 	else
 		$valid = 0;
 
-	$sql_str = "UPDATE hx_k_db.dev_t SET name='".$_POST['name']."', valid=".$valid." WHERE gid='".$_POST['guid']."'";
+	$sql_str = "UPDATE sp20150709_db.dev_t SET name='".$_POST['name']."', valid=".$valid." WHERE gid='".$_POST['guid']."'";
 	mysql_query( $sql_str, $con );
 	$res = mysql_affected_rows();
 	if( $res>0 )

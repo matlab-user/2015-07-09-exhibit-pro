@@ -17,10 +17,10 @@
 
 	mysql_query("SET NAMES 'utf8'", $con);
 	
-	$sql_str = "INSERT INTO hx_k_db.normal_t SET v_name='".$_POST['v_name']."', th1=".$_POST['th1'].", th2=".$_POST['th2'].", gid='".$_POST['gid']."'";
+	$sql_str = "INSERT INTO sp20150709_db.normal_t SET v_name='".$_POST['v_name']."', th1=".$_POST['th1'].", th2=".$_POST['th2'].", gid='".$_POST['gid']."'";
 	$res = mysql_query( $sql_str, $con );
 	
-	$sql_str = "UPDATE hx_k_db.normal_t SET th1=".$_POST['th1'].", th2=".$_POST['th2']." WHERE gid='".$_POST['gid']."' AND v_name='".$_POST['v_name']."'";
+	$sql_str = "UPDATE sp20150709_db.normal_t SET th1=".$_POST['th1'].", th2=".$_POST['th2']." WHERE gid='".$_POST['gid']."' AND v_name='".$_POST['v_name']."'";
 	$res = mysql_query( $sql_str, $con );
 	
 	mysql_close( $con );

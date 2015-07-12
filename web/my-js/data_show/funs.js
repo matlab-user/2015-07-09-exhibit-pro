@@ -35,10 +35,13 @@ function init() {
 	p_flot.css( {'outerWidth':'100%'} );
 	p_flot.height( p_flot.width()*0.52 );
 	
+/*
 	dev.p_plot = add_flot( 'p_flot' );
-	dev.f_plot = add_flot( 'f_flot' );
-	dev.temp_plot = add_flot( 'temp_flot' );
+	dev.f_plot = add_flot( 'f_flot' );	
 	dev.r_plot = add_flot( 'r_flot' );
+*/
+	dev.temp_plot = add_flot( 'temp_flot' );
+	
 	
 	$(".fdiv").bind("plothover", function (event, pos, item) {
 		if (item) {
@@ -70,18 +73,18 @@ function update() {
 	$.post( 'my-php/data_show/get_data.php',{'g1':dev.gid,'t':lt}, function( data ) {
 		if( parse_xml(data) ) {
 			update_latest_value();
-			
+/*			
 			update_flot( dev.p_plot, dev.p, dev.t );
 			dev.p = [];
-			
-			update_flot( dev.temp_plot, dev.temp, dev.t );
-			dev.temp = [];
-			
+						
 			update_flot( dev.f_plot, dev.f, dev.t );
 			dev.f = [];
 			
 			update_flot( dev.r_plot, dev.r, dev.t );	
 			dev.r = [];
+*/			
+			update_flot( dev.temp_plot, dev.temp, dev.t );
+			dev.temp = [];
 			
 			var lt = dev.t[dev.t.length-1];
 			dev.t = [];
@@ -91,7 +94,7 @@ function update() {
 	
 	check_normal();
 				
-	setTimeout( "update()", 5*1000 );
+	setTimeout( "update()", 2*1000 );
 }
 
 function update_ths() {
@@ -137,7 +140,7 @@ function check_normal() {
 	}
 	else 
 		$('#t_alarm_show').text('');
-
+/*
 	if( dev.new_p<=dev.p_normal_th1 || dev.new_p>=dev.p_normal_th2 ) {
 		sig = 1;
 		$('#p_alarm_show').text('压力异常');
@@ -151,7 +154,7 @@ function check_normal() {
 	}
 	else 
 		$('#f_alarm_show').text('');
-	
+*/	
 	if( sig!=0 )
 		$('#alarm_div').show();
 	else
@@ -315,7 +318,7 @@ function update_flot( plot, data, t ) {
 function update_latest_value() {
 	var t = dev.t[dev.t.length-1];	
 	var t_str = formatDate( t+dev.tz*3600 );
-	
+/*	
 	var vl = dev.p.length;
 	if( vl>0 ) {
 		$('#pv').html( dev.p[vl-1].toFixed(2) );
@@ -329,18 +332,18 @@ function update_latest_value() {
 		dev.new_f = dev.f[vl-1];
 		$('#fvt').html( t_str );
 	}
-		
+				
+	vl = dev.r.length;
+	if( vl>0 ) {
+		$('#rv').html( dev.r[vl-1].toFixed(2) );
+		$('#rvt').html( t_str );
+	}
+*/	
 	vl = dev.temp.length;
 	if( vl>0 ) {
 		$('#tv').html( dev.temp[vl-1].toFixed(2) );
 		dev.new_t = dev.temp[vl-1];
 		$('#tvt').html( t_str );
-	}
-		
-	vl = dev.r.length;
-	if( vl>0 ) {
-		$('#rv').html( dev.r[vl-1].toFixed(2) );
-		$('#rvt').html( t_str );
 	}
 }
 
