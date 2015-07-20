@@ -16,7 +16,9 @@
 		echo 'Unable to get socket option: '. socket_strerror(socket_last_error()).PHP_EOL;
 	elseif( $rval!==0 )
 		echo 'SO_REUSEADDR is set on socket !'.PHP_EOL;
-
+	
+	socket_set_option( $socket, SOL_SOCKET, SO_RCVTIMEO, array("sec"=>3, "usec"=>0 ) );
+		
 	$ok = socket_bind( $socket, '0.0.0.0', 0 );
 	if( $ok===false ) {
 		echo "false  \r\n";
@@ -25,8 +27,24 @@
 	}
 
 	//$cmd = 'S[s001,open]';
-	$cmd = 'D[s001,123.5]';
-	socket_sendto( $socket, $cmd, strlen($cmd), 0, '127.0.0.1', $port ); 
+	for( $i=0; $i<4; $i++ ) {
+		$cmd = 'D[s001,23.5]';
+		socket_sendto( $socket, $cmd, strlen($cmd), 0, 'www.swaytech.biz', $port ); 
+		
+		$cmd = 'I[s001]';
+		socket_sendto( $socket, $cmd, strlen($cmd), 0, 'www.swaytech.biz', $port ); 
+		
+		$r = array( $socket );
+		$num = socket_select( $r, $w=NULL, $e=NULL, 20 );
+		if( $num===false )
+			echo "socket_select() failed, reason: ".socket_strerror(socket_last_error())."\n";
+		elseif( $num>0 ) {
+			socket_recvfrom( $socket, $buf, 1000, 0, $to_ip, $to_port );
+			echo "res-----".$buf."\r\n";
+			$cmd = 'OK';
+			socket_sendto( $socket, $cmd, strlen($cmd), 0, 'www.swaytech.biz', $port ); 
+		}
+	}
 	
 	socket_close( $socket );
 
